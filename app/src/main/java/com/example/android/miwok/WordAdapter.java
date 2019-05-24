@@ -1,19 +1,24 @@
 package com.example.android.miwok;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 public class WordAdapter extends ArrayAdapter<Word> {
 
-    public WordAdapter(Context context, List<Word> words) {
+    private int mColorResourceId;
+
+    public WordAdapter(Context context, List<Word> words, int backgroundColor) {
         super(context, 0, words);
+        mColorResourceId = backgroundColor;
     }
 
     @Override
@@ -35,6 +40,10 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         TextView defaultTranslationTextView = listItemView.findViewById(R.id.english_word);
         defaultTranslationTextView.setText(currentWord.getDefaultTranslation());
+
+        View textContainer = listItemView.findViewById(R.id.texts_container);
+        int color = ContextCompat.getColor(getContext(),mColorResourceId);
+        textContainer.setBackgroundColor(color);
 
         // Find the ImageView in the list_item.xml layout with the ID list_item_icon
         ImageView image = listItemView.findViewById(R.id.image_view);
