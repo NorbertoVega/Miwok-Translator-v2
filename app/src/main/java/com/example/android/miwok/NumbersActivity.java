@@ -21,13 +21,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class NumbersActivity extends AppCompatActivity {
 
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer mMediaPlayer;
+
+    private MediaPlayer.OnCompletionListener mCompletionListener= new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            releaseMediaPlayer();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,24 +60,29 @@ public class NumbersActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Word currentWord = (Word) adapterView.getItemAtPosition(i);
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), currentWord.getSoundResourceId());
-                mediaPlayer.start();
+                releaseMediaPlayer();
+                mMediaPlayer = MediaPlayer.create(getApplicationContext(), currentWord.getSoundResourceId());
+                mMediaPlayer.start();
+                mMediaPlayer.setOnCompletionListener(mCompletionListener);
             }
         });
 
+    }
 
-        /*
-        for(int i = 0; i<words.size(); i++)
-            Log.v("NumbersActivity","Word at index: " + i + ": " + words.get(i));
+    /**
+     * Clean up the media player by releasing its resources.
+     */
+    private void releaseMediaPlayer() {
+        // If the media player is not null, then it may be currently playing a sound.
+        if (mMediaPlayer != null) {
+            // Regardless of the current state of the media player, release its resources
+            // because we no longer need it.
+            mMediaPlayer.release();
 
-
-        LinearLayout rootView = findViewById(R.id.root_view);
-
-        for (int i = 0 ;i<words.size(); i++){
-            TextView wordView = new TextView(this);
-            wordView.setText(words.get(i));
-            rootView.addView(wordView);
+            // Set the media player back to null. For our code, we've decided that
+            // setting the media player to null is an easy way to tell that the media player
+            // is not configured to play an audio file at the moment.
+            mMediaPlayer = null;
         }
-        */
     }
 }
