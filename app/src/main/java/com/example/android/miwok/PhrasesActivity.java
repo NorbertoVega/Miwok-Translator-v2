@@ -48,6 +48,7 @@ public class PhrasesActivity extends AppCompatActivity {
         WordAdapter itemsAdapter = new WordAdapter(this,words,R.color.category_phrases);
 
         ListView listView = findViewById(R.id.list);
+        listView.setAdapter(itemsAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -56,6 +57,6 @@ public class PhrasesActivity extends AppCompatActivity {
                 mediaPlayer.start();
             }
         });
-        listView.setAdapter(itemsAdapter);
+
     }
 }
