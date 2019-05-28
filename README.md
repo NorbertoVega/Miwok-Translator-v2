@@ -1,6 +1,6 @@
 Miwok App (App de practica Udacity)
 ===================================
 
-This app displays lists of vocabulary words for the user to learn the Miwok language.
-Used in a Udacity course in the Beginning Android Nanodegree.
+Esta app muetra listas de vocabulario para que el usuario aprenda el lenguaje Miwok. En esta version se usa
+ViewPager y TabLayout, cambiando el aspecto y organización de la app(en esta version hay pestañas).
 
